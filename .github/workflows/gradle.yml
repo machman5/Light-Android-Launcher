@@ -24,24 +24,3 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-name: Compare artifacts
-
-on: [push, pull_request]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      # Generate the artifact for this build
-      - name: Build artifact
-        run: echo "$GITHUB_RUN_NUMBER" > test-artifact.txt
-
-      # Download the base artifact using this action
-      - uses: andrewiggins/download-base-artifact@v1
-        with:
-          artifact: "test-artifact.txt"
-          path: base
-
-      # Compare the two artifacts as you wish
-      - run: diff test-artifact.txt base/test-artifact.txt
